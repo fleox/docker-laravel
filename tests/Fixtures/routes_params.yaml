@@ -1,0 +1,34 @@
+parameters:
+  route_params:
+    app_content:
+      params: 
+        id: 1
+    admin:
+      response-status-code: 307
+    api_user:
+      need-user-auth: true
+    api_contact:
+      need-user-auth: true
+      params:
+        0: 'John Doe'
+        1: 'john@example.com'
+        2: 'Hello World!'
+      response-status-code: 200
+      method: 'POST'
+    profile.edit:
+      need-user-auth: true
+    profile.update:
+      need-user-auth: true
+    profile.destroy:
+      need-user-auth: true
+    dashboard:
+      need-user-auth: true
+    logout:
+      response-status-code: 405
+    verification.notice:
+      response-status-code: 302
+    verification.send:
+      response-status-code: 405
+    hello_name:
+      params: 
+        name: 'fred'

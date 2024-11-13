@@ -1,0 +1,34 @@
+services:
+  app_laravel_front:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      args:
+        - APP_DEBUG=true
+    volumes:
+      - ./:/var/www/project/:cached
+      #- ./public:/var/www/project/public:cached
+    labels:
+      - "traefik.http.routers.laravel.rule=Host(`local.laravel.fr`)"
+      - traefik.http.routers.laravel.entrypoints=http
+      - traefik.http.services.laravel.loadbalancer.server.port=80
+    environment:
+      - APP_DEBUG=true
+    networks:
+      - traefik
+      - laravel
+
+  node:
+    image: node:18.17.0
+    working_dir: /var/www/project
+    volumes:
+      - .:/var/www/project
+    depends_on:
+      - app_laravel_front
+    ports:
+      - "5173:5173" 
+
+networks:
+  laravel:
+  traefik:
+    external: true
